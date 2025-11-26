@@ -1,0 +1,35 @@
+```mermaid
+graph TD
+    subgraph Sources["Log Sources"]
+        Apps[Applications]
+        Infra[Infrastructure]
+        Security[Security Logs]
+    end
+
+    subgraph Ingest["Ingestion"]
+        Firehose[Kinesis Firehose]
+        Lambda[Transform Lambda]
+    end
+
+    subgraph Hot["Hot Tier"]
+        OpenSearch[OpenSearch Cluster]
+        Dashboards[Dashboards]
+    end
+
+    subgraph Cold["Cold Tier"]
+        S3[S3 Data Lake]
+        Athena[Athena Queries]
+        Glue[Glue Catalog]
+    end
+
+    Apps --> Firehose
+    Infra --> Firehose
+    Security --> Firehose
+    Firehose --> Lambda
+    Lambda --> OpenSearch
+    Lambda --> S3
+    OpenSearch --> Dashboards
+    S3 --> Glue
+    Glue --> Athena
+    OpenSearch --> S3
+```

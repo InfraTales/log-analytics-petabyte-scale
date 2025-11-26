@@ -1,0 +1,17 @@
+```mermaid
+sequenceDiagram
+    participant Src as Log Source
+    participant KF as Kinesis Firehose
+    participant OS as OpenSearch
+    participant S3 as S3 Data Lake
+    participant User as Analyst
+
+    Src->>KF: Send logs
+    KF->>KF: Buffer & transform
+    KF->>OS: Index recent logs
+    KF->>S3: Archive all logs
+    User->>OS: Search recent logs
+    OS-->>User: Results
+    User->>S3: Query historical (Athena)
+    S3-->>User: Results
+```

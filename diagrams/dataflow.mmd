@@ -1,0 +1,34 @@
+```mermaid
+graph LR
+    subgraph Collect["Collection"]
+        Agents[Log Agents]
+        APIs[Log APIs]
+    end
+
+    subgraph Process["Processing"]
+        Parse[Parse & Enrich]
+        Filter[Filter & Route]
+    end
+
+    subgraph Store["Storage Tiers"]
+        Hot[Hot - OpenSearch]
+        Warm[Warm - S3 Standard]
+        Cold[Cold - S3 Glacier]
+    end
+
+    subgraph Query["Query Layer"]
+        Dashboard[Dashboards]
+        Search[Full-Text Search]
+        SQL[SQL Queries]
+    end
+
+    Agents --> Parse
+    APIs --> Parse
+    Parse --> Filter
+    Filter --> Hot
+    Hot --> Warm
+    Warm --> Cold
+    Hot --> Dashboard
+    Hot --> Search
+    Warm --> SQL
+```
