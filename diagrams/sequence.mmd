@@ -1,4 +1,3 @@
-```mermaid
 sequenceDiagram
     participant Src as Log Source
     participant KF as Kinesis Firehose
@@ -14,4 +13,3 @@ sequenceDiagram
     OS-->>User: Results
     User->>S3: Query historical (Athena)
     S3-->>User: Results
-```
